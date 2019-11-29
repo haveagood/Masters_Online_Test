@@ -13,21 +13,36 @@ def baseball():
 def playball(game_status, game_cnt):
     now_status = random.choice(game_status)
 
-'''
-일차적으로 큰 틀을 작성하였습니다.
+    while True:
+        now_status = random.choice(game_status)
+        print(" ")
+        if now_status == "anta":
+            game_cnt[0] += 1
+            game_cnt[1], game_cnt[2] = 0, 0
+            print("안타! 다음 타자가 타석에 입장했습니다.")
+        elif now_status == "strike":
+            game_cnt[1] += 1
+            print("스트라이크!")
+            if game_cnt[1] == 3:
+                print("아웃! 다음 타자가 타석에 입장했습니다.")
+                game_cnt[3] += 1
+                game_cnt[1], game_cnt[2] = 0, 0
+                if game_cnt[3] == 3:
+                    break
+        elif now_status == "ball":
+            game_cnt[2] += 1
+            print("볼!")
+            if game_cnt[2] == 4:
+                game_cnt[0] += 1
+                print("포볼! 다음 타자가 타석에 입장했습니다.")
+                game_cnt[1], game_cnt[2] = 0, 0
+        elif now_status == "out":
+            if game_cnt[3] == 3:
+                break
+            game_cnt[3] += 1
+            game_cnt[1], game_cnt[2] = 0, 0
+            print("아웃! 다음 타자가 타석에 입장했습니다.")
 
-기본적으로 step-1 단계에서 주어진 요건은 함수형으로 코딩을 하고, 함수의 이름과 매개변수, 반환값을 고려하여 코딩을 하는 것입니다.
-
-첫번째 단계로서 크게 3가지의 함수로 프로그램을 구성했습니다.
-
-1. main()
-    야구 게임을 실행하게 하는 함수입니다. 초기 출력값과 baseball이라는 함수를 실행하게 하였습니다.
-    
-2. baseball()
-    야구 게임이 여러 이닝이 진행 될 경우를 생각하여 한 게임을 플레이 할 때, 사용하기 위하여 baseball이라는 함수를 별도로 만들었습니다.
-    해당 함수에는 게임의 기록과 야구에서 등장하는 4가지의 경우의 수를 리스트로 설정하였습니다.
-    
-3. playball()
-    실질적으로 각 이닝의 플레이가 이루어지는 함수입니다.
-    now_status라는 변수에 game_status리스트에서 random 라이브러리를 사용하여 임의의 상태를 하나 갖도록 하였습니다.
-'''
+        print("%dS %dB %dO" % (game_cnt[1], game_cnt[2], game_cnt[3]))
+    print("최종 안타수 : %d" % (game_cnt[0]))
+    print("GAME OVER")
