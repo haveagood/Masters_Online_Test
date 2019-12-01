@@ -18,22 +18,29 @@ def input_data():
     team_1,team_2 = dict(),dict()
     print("1 팀의 이름을 입력하세요> ",end = "")
     team_1_name = input()
-    for i in range(1,10):
-        print("%d번 타자 정보 입력> " %(i),end = "")
-        name,hit = input().split(", ")
-        team_1[name] = float(hit)
-
+    team_1 = input_team_data(team_1)
     print("2 팀의 이름을 입력하세요> ",end = "")
     team_2_name = input()
-    for j in range(1,10):
-        print("%d번 타자 정보 입력> " % (j),end = "")
-        name,hit = input().split(", ")
-        team_2[name] = float(hit)
-
+    team_2 = input_team_data(team_2)
     print("팀 데이터 입력이 완료되었습니다.")
-
     return team_1_name,team_1,team_2_name,team_2
 
+def input_team_data(team):
+    cnt = 1
+    while cnt < 10:
+        print("%d번 타자 정보 입력> " %(cnt),end = "")
+        name,hit = input().split(", ")
+        if name in team.keys():
+            print("이미 존재하는 선수 입니다.")
+        elif len(hit) > 5:
+            print("소숫점 자릿수를 확인하여 주세요")
+        elif 0.1 > float(hit) or float(hit) > 0.5:
+            print("선수의 타율이 잘못 입력되었습니다.")
+        else:
+            team[name] = float(hit)
+            cnt += 1
+
+    return team
 
 def output_data(team_1_name,team_1,team_2_name,team_2):
     print("2번 메뉴")
