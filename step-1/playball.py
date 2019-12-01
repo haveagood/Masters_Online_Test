@@ -62,6 +62,7 @@ def strike(game_cnt):
 def ball(game_cnt):
     game_cnt[2] += 1
     if game_cnt[2] == 4:
+        game_cnt[0] += 1
         print("포볼!", end = " ")
         game_cnt = next_player(game_cnt)
     else:
