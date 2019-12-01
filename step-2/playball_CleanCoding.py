@@ -1,17 +1,12 @@
 import random
 
 def main():
-    # team_1_name = "aaaa"
-    # team_2_name = "bbbb"
-    # team_1 = {'최석원': 0.423, '김민수': 0.433, '강만식': 0.344, '김도일': 0.342, '공한직': 0.454, '갈마인': 0.236, '안성기': 0.498,
-    #           '임채룡': 0.435, '한성옥': 0.223}
-    # team_2 = {'최석': 0.423, '민수': 0.433, '강식': 0.344, '도일': 0.342, '공직': 0.454, '마인': 0.446, '성기': 0.498,
-    #           '임룡': 0.435, '한성': 0.423}
+
     while True:
         print("신나는 야구 시합 \n1. 데이터 입력\n2. 데이터 출력\n3. 게임 시작\n메뉴 선택 ( 1 - 3 ) : ",end = "")
         menu_choice = input()
         if int(menu_choice) == 1:
-            team_1_name,team_1,team_2_name,team_2# = input_data()
+            team_1_name,team_1,team_2_name,team_2 = input_data()
         elif int(menu_choice) == 2:
             output_data(team_1_name,team_1,team_2_name,team_2)
         elif int(menu_choice) == 3:
@@ -269,77 +264,12 @@ def choice(hit):
      
 '''
 
+# team_1_name = "aaaa"
+# team_2_name = "bbbb"
+# team_1 = {'최석원': 0.423, '김민수': 0.433, '강만식': 0.344, '김도일': 0.342, '공한직': 0.454, '갈마인': 0.236, '안성기': 0.498,
+#           '임채룡': 0.435, '한성옥': 0.223}
+# team_2 = {'최석': 0.423, '민수': 0.433, '강식': 0.344, '도일': 0.342, '공직': 0.454, '마인': 0.446, '성기': 0.498,
+#           '임룡': 0.435, '한성': 0.423}
 
-# def playball(game_status,game_cnt):
-#
-#     while True:
-#
-#         now_status = random.choice(game_status)
-#         print(" ")
-#
-#         if now_status == "anta":
-#             game_cnt = anta(game_cnt)
-#         elif now_status == "strike":
-#             game_cnt = strike(game_cnt)
-#         elif now_status == "ball":
-#             game_cnt = ball(game_cnt)
-#         elif now_status == "out":
-#             game_cnt = out(game_cnt)
-#
-#         print("%dS %dB %dO" % (game_cnt[1], game_cnt[2], game_cnt[3]))
-#
-#         if game_cnt[3] == 3:
-#             print(" ")
-#             break
-#
-#
-#     print("최종 안타수 : %d" %(game_cnt[0]))
-#     print("GAME OVER")
-#
-#
-# def next_player(game_cnt):
-#     print("다음 타자가 타석에 입장했습니다.")
-#     game_cnt[1], game_cnt[2] = 0, 0
-#     return game_cnt
-#
-#
-# def anta(game_cnt):
-#     game_cnt[0] += 1
-#     print("안타!", end = " ")
-#     game_cnt = next_player(game_cnt)
-#     return game_cnt
-#
-#
-# def strike(game_cnt):
-#     game_cnt[1] += 1
-#     print("스트라이크!")
-#     if game_cnt[1] == 3:
-#         game_cnt = out(game_cnt)
-#
-#     return game_cnt
-#
-#
-# def ball(game_cnt):
-#     game_cnt[2] += 1
-#     if game_cnt[2] == 4:
-#         print("포볼!", end = " ")
-#         game_cnt = next_player(game_cnt)
-#     else:
-#         print("볼!")
-#     return game_cnt
-#
-#
-# def out(game_cnt):
-#     game_cnt[3] += 1
-#     if game_cnt[3] == 3:
-#         game_cnt[1],game_cnt[2] = 0,0
-#         print("아웃!")
-#         return game_cnt
-#
-#     else:
-#         print("아웃!", end = " ")
-#         game_cnt = next_player(game_cnt)
-#         return game_cnt
-#
 
 main()
