@@ -2,6 +2,13 @@ import random
 
 
 def main():
+    team_1_name = "aaaa"
+    team_2_name = "bbbb"
+    team_1 = {'최석원': 0.423, '김민수': 0.433, '강만식': 0.344, '김도일': 0.342, '공한직': 0.454, '갈마인': 0.236, '안성기': 0.498,
+              '임채룡': 0.435, '한성옥': 0.223}
+    team_2 = {'최석': 0.423, '민수': 0.433, '강식': 0.344, '도일': 0.342, '공직': 0.454, '마인': 0.446, '성기': 0.498,
+              '임룡': 0.435, '한성': 0.423}
+
     while True:
         print("신나는 야구 시합 \n1. 데이터 입력\n2. 데이터 출력\n3. 게임 시작\n메뉴 선택 ( 1 - 3 ) : ", end="")
         menu_choice = input()
@@ -72,15 +79,17 @@ def player_print(name, hit):
 
 def playball(team_1_name, team_1, team_2_name, team_2):
     team1_idx, team2_idx = 0, 0
-    score_board = [[0] * 7 for _ in range(2)]
+    score_board_list = [[0] * 7 for _ in range(2)]
+    tot_team_data = [[0]*3 for _ in range(2)]
     print("%s VS %s의 시합을 시작합니다.\n" % (team_1_name, team_2_name))
     for i in range(1, 7):
         print("%d회 초 %s의 공격" % (i, team_1_name))
-        score_board[0][i], team1_idx = ining(team_1, team1_idx)
+        score_board_list[0][i], team1_idx,tot_team_data[0] = ining(team_1, team1_idx,tot_team_data[0])
         print("%d회 말 %s의 공격" % (i, team_2_name))
-        score_board[1][i], team2_idx = ining(team_2, team1_idx)
+        score_board_list[1][i], team2_idx,tot_team_data[1] = ining(team_2, team1_idx,tot_team_data[1])
 
-    final_score(team_1_name, team_2_name, score_board)
+    final_score(team_1_name, team_2_name, score_board_list)
+    score_board(team_1_name, team_2_name, score_board_list, team_1, team_2)
 
 
 def final_score(team_1_name, team_2_name, score_board):
@@ -91,14 +100,14 @@ def final_score(team_1_name, team_2_name, score_board):
     print("Thank You!!")
 
 
-def ining(team, team_idx):
+def ining(team, team_idx,team_data):
     name_list, hit_list = change_dict(team)
     game_cnt = [0, 0, 0, 0]
     get_point = 0
     while True:
         team_idx += 1
         print("%d 번 %s" % (team_idx, name_list[team_idx - 1]))
-        game_cnt = now_play(game_cnt, hit_list[team_idx - 1])
+        game_cnt = now_play(game_cnt, hit_list[team_idx - 1],team_data)
         if team_idx == 9:
             team_idx = 0
         if game_cnt[3] == 3:
@@ -106,18 +115,21 @@ def ining(team, team_idx):
 
     if game_cnt[0] - 4 > 0:
         get_point = game_cnt[0] - 4
-    return get_point, team_idx
+    return get_point, team_idx,team_data
 
 
-def now_play(game_cnt, hit):
+def now_play(game_cnt, hit,team_data):
     while True:
         now = choice(hit)
+        team_data[0] += 1
         if now == "anta":
             game_cnt = anta(game_cnt)
+            team_data[1] += 1
             break
         elif now == "strike":
             game_cnt = strike(game_cnt)
             if game_cnt[1] == 3:
+                team_data[2]
                 break
         elif now == "ball":
             game_cnt = ball(game_cnt)
@@ -180,38 +192,43 @@ def choice(hit):
         return "out"
 
 
-# team_1_name = "aaaa"
-# team_2_name = "bbbb"
-# team_1 = {'최석원': 0.423, '김민수': 0.433, '강만식': 0.344, '김도일': 0.342, '공한직': 0.454, '갈마인': 0.236, '안성기': 0.498,
-#           '임채룡': 0.435, '한성옥': 0.223}
-# team_2 = {'최석': 0.423, '민수': 0.433, '강식': 0.344, '도일': 0.342, '공직': 0.454, '마인': 0.446, '성기': 0.498,
-#           '임룡': 0.435, '한성': 0.423}
-
 #---------------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------------
 
-def Score_board():
+def score_board(team_1_name,team_2_name,score_board,team_1,team_2):
 
+    name_length = len(team_1_name)
     if len(team_1_name) < len(team_2_name):
         name_length = len(team_2_name)
 
     print("+--------------------------------+")
     print("| "+" "*name_length+" " * (10-name_length)+"1 2 3 4 5 6 | TOT    |")
-    team_score_print(team_1_name,name_length,score_board[0])
-    team_score_print(team_2_name,name_length,score_board[1])
+    team_score_print(team_1_name,team_2_name,name_length,score_board)
     print("|  " + " " * 28 + "  |")
     print("|     " +team_1_name+" "*(24-(name_length*2))+team_2_name+ "   |")
     team_player_print(team_1,team_2)
     print("|  " + " " * 28 + "  |")
+    print("|  투구 수 : ")
+    print("|  안타 수 : ")
+    print("|  삼진 수 : ")
     print("+--------------------------------+")
 
 
 
-def team_score_print(team_name,name_length,score_board):
-    print("| "+team_name+" "*(10-name_length),end="")
-    for i in range(len(score_board)):
-        print(score_board[i],end=" ")
-    print("|"+" "*8 + "|")
+def team_score_print(team1_name,team2_name,name_length,score_board):
+    print("| "+team1_name+" "*(10-name_length),end="")
+    for i in range(len(score_board[0])):
+        print(score_board[0][i],end=" ")
+    print("|",end=" ")
+    print(sum(score_board[0]),end=" ")
+    print("  |")
+
+    print("| " + team2_name + " " * (10 - name_length), end="")
+    for i in range(len(score_board[1])):
+        print(score_board[1][i], end=" ")
+    print("|", end=" ")
+    print(sum(score_board[1]),end=" ")
+    print("  |")
 
 
 def team_player_print(team_1,team_2):
@@ -239,6 +256,4 @@ def namelength_check(name_list):
             name_list[i] = name_list[i]+" "*(n+1)
     return name_list
 
-#main()
-
-Score_board()
+main()
