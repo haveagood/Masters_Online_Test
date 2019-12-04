@@ -113,22 +113,30 @@ def now_play(game_cnt,hit):
 
     while True:
         now = choice(hit)
-        if now == "anta":
-            game_cnt = anta(game_cnt)
-            break
-        elif now == "strike":
-            game_cnt = strike(game_cnt)
-            if game_cnt[1] == 3:
-                break
-        elif now == "ball":
-            game_cnt = ball(game_cnt)
-            if game_cnt[2] == 4:
-                break
-        elif now == "out":
-            game_cnt = out(game_cnt)
+        game_cnt,p_change = now_case(game_cnt,now)
+        if p_change == 1:
             break
     game_cnt[1],game_cnt[2] = 0,0
     return game_cnt
+
+
+def now_case(game_cnt,now):
+    p_change = 0
+    if now == "anta":
+        game_cnt = anta(game_cnt)
+        p_change = 1
+    elif now == "strike":
+        game_cnt = strike(game_cnt)
+        if game_cnt[1] == 3:
+            p_change = 1
+    elif now == "ball":
+        game_cnt = ball(game_cnt)
+        if game_cnt[2] == 4:
+            p_change = 1
+    elif now == "out":
+        game_cnt = out(game_cnt)
+        p_change = 1
+    return game_cnt,p_change
 
 
 def anta(game_cnt):
@@ -264,12 +272,6 @@ def choice(hit):
      
 '''
 
-# team_1_name = "aaaa"
-# team_2_name = "bbbb"
-# team_1 = {'최석원': 0.423, '김민수': 0.433, '강만식': 0.344, '김도일': 0.342, '공한직': 0.454, '갈마인': 0.236, '안성기': 0.498,
-#           '임채룡': 0.435, '한성옥': 0.223}
-# team_2 = {'최석': 0.423, '민수': 0.433, '강식': 0.344, '도일': 0.342, '공직': 0.454, '마인': 0.446, '성기': 0.498,
-#           '임룡': 0.435, '한성': 0.423}
 
 
 main()
